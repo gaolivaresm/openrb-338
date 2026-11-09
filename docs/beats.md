@@ -74,6 +74,24 @@ A value means, for the 808: `0` off, `1` on. For the 909: `0` off, `1` on, `2` a
 
 `length` is `1` to `16` (the pattern's steps; the rest of the 16 are silent).
 
+### Accent is not a sound
+
+The first column of both machines is `accent`, and it is not a drum. A step with accent makes
+**every** sound of that step louder, by the same amount, and the machine's `accent_level` knob sets
+that difference. It is how a flat pattern gets life: a closed hi-hat on all sixteenths with accents
+on the odd steps is the classic example (manual, page 35).
+
+### Open and closed hi-hat exclude each other
+
+Open hi-hat and closed hi-hat cannot sound together (manual, page 35):
+
+- A closed hi-hat cuts off an open one that is still ringing.
+- On the **808**, both on the same step give a very short open hi-hat, which sounds like a closed
+  one.
+- On the **909**, both on the same step give the open hi-hat.
+
+So an open hi-hat followed by a closed one is a two-step gesture, not two independent sounds.
+
 ### The 303 patterns
 
 A step is an object, not a bare number (`Step303` in `tools/rbs.py`):
@@ -92,6 +110,10 @@ A step is an object, not a bare number (`Step303` in `tools/rbs.py`):
 A step left out of the spec keeps the template's, which is `rest: 1` — silence. So you write only
 the notes, and the holes stay silent.
 
+**Slide goes on the note you slide *from*, not the one you slide to** (manual, page 45). The step
+with `slide` ties into the next one and the pitch glides continuously. A slide from a rest still
+glides: the glide starts at the silent step's pitch and lands on the next note's.
+
 `note` is a scale position, not a MIDI note, so what you get depends on the 303's `tune` and the
 song's `vintage` setting. Write the pattern, render, and listen: there is no table that turns
 `note: 5` into a named pitch without running the engine.
@@ -101,16 +123,36 @@ song's `vintage` setting. Write the pattern, render, and listen: there is no tab
 | Parameter | Range | What it does |
 |---|---|---|
 | `cutoff` | 0 to 127 | the filter: low is dark and round, high is bright and thin |
-| `resonance` | 0 to 127 | high makes the acid "wah"; near 127 it self-oscillates |
-| `env_mod` | 0 to 127 | how much the envelope opens the filter on each note |
-| `decay` | 0 to 127 | the envelope's tail |
-| `accent` | 0 to 127 | how hard an accented step hits |
-| `tune` | 0 to 127 | the base pitch |
-| `waveform` | 0 or 1 | `0` is the saw (verified: `docs/song_load.md` section 10) |
+| `resonance` | 0 to 127 | routes the filter's output back to its input: a hollow, pronounced character. With envelope modulation, slide and accent, it makes the 303 what it is |
+| `env_mod` | 0 to 127 | how far the envelope opens the filter. At its lowest it barely acts; higher makes each note brighter and then darker as it decays |
+| `decay` | 0 to 127 | the length of that envelope: fast or slow dulling of each note |
+| `accent` | 0 to 127 | how different an accented step sounds from the others, in volume and in character (the manual, page 49) |
+| `tune` | ±1 octave in semitones | the base pitch, for putting patterns in a key |
+| `waveform` | 0 or 1 | `0` is the sawtooth (all harmonics, full), `1` the square (odd harmonics only, hollow) |
 
-For a low hip-hop bass line: low `cutoff` (30 to 45), low `accent`, short `decay`. A high
-`resonance` above 70 with a loud `env_mod` is the 1997 acid sound, which is probably not what a
-beat wants.
+For a low hip-hop bass line: low `cutoff` (30 to 45), low `accent`, short `decay`. The 303 is a
+monophonic acid synth by design: a high `resonance` with a loud `env_mod` is its signature sound,
+and it is not what a plain bass line usually wants.
+
+> The `Envelope Modulation` and `Decay` descriptions are the original manual's (page 48 to 49,
+> `docs/propellerhead_rebirth_rb338_v2.01_manual.pdf`), which is the authority on what the knobs
+> are meant to do; the code only says what they compute.
+
+## Shuffle (swing)
+
+Shuffle has two parts, and they live in different places:
+
+- **Amount**, one for the whole song: `glob.shuffle`, `0` to `127` (`docs/song_load.md`, GLOB[14]).
+  It delays the sixteenth notes that fall between the eighths, which is the swing feel.
+- **On or off, per section**: each pattern carries a shuffle flag, so the 808 can swing while the
+  909 stays straight (manual, page 21: "activate Shuffle for the desired sections").
+
+The manual's pointer for the amount: **around "two o'clock" you get a classic triplet feel.** Its
+knob is drawn as a dial, so the 0 to 127 value at two o'clock is about 85; the template's 64 is a
+milder swing. `0` is straight.
+
+> This is an estimate from the dial's geometry, not a measured value: the manual names a clock
+> position, not a number. Check it by ear.
 
 ## Making it a song, not a one-bar loop
 
@@ -205,4 +247,20 @@ python3 tools/rbs.py json SONG.rbs     # the model, the same shape `build` takes
 ```
 
 Copying a `diag` song and changing one field is the fastest way to learn what each knob does.
+
+## Where this comes from
+
+Two sources, and they know different things:
+
+- **The code and the songs** (`tools/rbs.py`, `crates/`, `tests/songs/`) say what a value
+  computes and what a field is called.
+- **The original manual**, `docs/propellerhead_rebirth_rb338_v2.01_manual.pdf` (232 pages, Ernst
+  Nathorst-Böös, Propellerhead 1998), says what a knob is *for*. The code cannot tell you that a
+  closed hi-hat cuts off an open one, or that slide goes on the step you slide from.
+
+The manual is copyrighted and stays out of git (`.gitignore`), read locally only. What is written
+here is in our own words, with the page it comes from, so a reader can check it.
+
+Where the two disagree, the manual wins on intent and the code wins on behaviour: this project
+matches what the original *did*, which the manual describes and the disassembly proves.
 

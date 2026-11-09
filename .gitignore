@@ -30,3 +30,8 @@ __pycache__/
 
 # Packages built by scripts/ (task-108)
 /dist/
+
+# The original's copyrighted material, kept on the machine and never in git: the ReBirth manuals
+# are Propellerhead's, as the program itself is (AGENTS.md). docs/beats.md cites the manual by page;
+# what is learned from it is written there in our own words.
+/docs/*manual*.pdf
