@@ -345,6 +345,20 @@ A change that reaches the engine changes the audio. Render twice and compare wit
 files mean the knob never reached the engine. That test is what exposed the track-versus-chunk trap
 above, and it is the fastest way to tell a real parameter from a decorative one.
 
+### One case this check has not settled
+
+The compressor is the one parameter this document could not move. Setting its amount and
+threshold, its `enabled`, and the mixer's `comp_id` from 0 to 5 all leave the render byte-identical
+(`md5sum` equal), on this beat and on the article's own `Plucked 303-01.rbs`. The engine does
+implement it (`crates/orb-engine/src/comp.rs`, `CCompInsert`), and `comp_id` selects where it sits
+(1 the master, 2..5 a channel, `crates/orb-engine/src/song.rs`); so either the routing needs
+something else that these specs do not set, or the effect is subtle enough not to reach these
+programme materials.
+
+Not a claim that it is broken: a note that the "the md5 tells you" check says no here, and nobody has
+yet found the input that makes it say yes.
+
+
 
 ## Where this comes from
 
