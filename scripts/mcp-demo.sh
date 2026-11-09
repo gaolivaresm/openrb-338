@@ -62,13 +62,6 @@ run "orb_mod_list: the mods of the folder" orb_mod_list \
 run "a range of two bars" orb_render \
     "{\"song\":\"$SONG\",\"output\":\"$OUT\",\"range\":\"0:2\",\"cwd\":\"$ROOT\"}"
 
-run "a song that is not there" orb_info \
-    "{\"song\":\"nope.rbs\",\"cwd\":\"$ROOT\"}"
-run "an output extension that orb does not write" orb_render \
-    "{\"song\":\"$SONG\",\"output\":\"out.mp3\",\"cwd\":\"$ROOT\"}"
-run "a range whose end is before its start" orb_render \
-    "{\"song\":\"$SONG\",\"output\":\"$OUT\",\"range\":\"4:0\",\"cwd\":\"$ROOT\"}"
-
 echo
 echo "=== the WAV orb_render wrote ==="
 if [ -f "$OUT" ]; then
