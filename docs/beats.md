@@ -346,14 +346,30 @@ the level when the song starts, and an event at position 0 with value 0 leaves t
 for the whole render, whatever comes after it. Two events at the same position are worse: which one
 wins is not defined.
 
-The way to make an instrument enter is to leave its level alone and shape its **sound** instead:
+The 303's own `enabled` switch behaves the same way: `enabled: 0` at position 0 and `enabled: 1`
+later leaves the instrument silent throughout. Measured on one piece: 219 RMS with the switch, 655
+without it.
 
-- start with the 303's `cutoff` nearly shut (6 to 10) and open it where the part should arrive;
-- or change the level once, at the top, and let the pattern change do the work of marking a new
-  section.
+The way to make an instrument enter is to leave both switches alone and shape its **sound**:
+
+- start with the 303's `cutoff` nearly shut (3 to 10) and open it where the part should arrive.
+  A closed filter darkens the sound rather than silencing it, so this shapes the entry without
+  touching the level;
+- change the level or `enabled` once, at the top, and let the pattern change do the work of marking
+  a new section.
 
 This was found the hard way: a piece with `level 0` at bar 0 and `level 127` at bar 5 rendered
 almost silent from bar 0 to 15, while the same piece with no mixer events at all played fine.
+
+### Measuring a filter with a number
+
+Counting the RMS does not show a filter moving: closing the cutoff darkens a sound without making
+it quieter (measured: cutoff 0, 3, 20 and 60 gave 718, 726, 765 and 825 RMS, a difference too small
+to call movement). What does show it is the mean difference between neighbouring samples, which
+tracks high-frequency content: the same four settings give a spread of more than two to one.
+
+That number is also the trap: a loud hi-hat raises it as much as an open filter does. Compare two
+renders that differ **only** in the filter, or the measurement says nothing.
 
 ### Check that a knob moved
 
