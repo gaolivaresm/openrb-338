@@ -120,6 +120,38 @@ song's `vintage` setting. Write the pattern, render, and listen: there is no tab
 
 ### The 303's knobs
 
+A knob has two homes in the file, and only one of them is heard:
+
+- The **chunk** (`tb303[0].params`) is what the panel shows when the song opens.
+- The **track** (`tracks.tb303_1`) is a list of knob events, and **the automation wins**: in song
+  mode the engine follows the events, not the chunk.
+
+Setting `cutoff` in the chunk and nothing in the track gives you silence for that knob. This is
+the easiest way to lose an afternoon: the file looks right, the value is there, and the bass does
+not change when you edit it. Write the knobs as track events:
+
+```json
+"tracks": {
+  "tb303_1": [
+    {"pos": 0, "ctrl": "cutoff",    "value": 52},
+    {"pos": 0, "ctrl": "resonance", "value": 35},
+    {"pos": 0, "ctrl": "env_mod",   "value": 45},
+    {"pos": 0, "ctrl": "decay",     "value": 62},
+    {"pos": 0, "ctrl": "accent",    "value": 58},
+    {"pos": 0, "ctrl": "tune",      "value": 64},
+    {"pos": 0, "ctrl": "waveform",  "value": 0},
+    {"pos": 0, "ctrl": "pattern",   "value": 0}
+  ]
+}
+```
+
+Check it: change `cutoff` to 20 and to 90 and render both. If the two WAVs are byte-identical, the
+knob is not reaching the engine. (`md5sum` on the two files answers it at once.)
+
+A second trap, which caught this document's own first beat: the knobs went into `tb303_2`'s track
+while the notes were in `tb303_1`'s. Both machines are in the song, `tb303_1` plays, and the knob
+events sit on the one that does not. Keep every event of an instrument on that instrument's track.
+
 | Parameter | Range | What it does |
 |---|---|---|
 | `cutoff` | 0 to 127 | the filter: low is dark and round, high is bright and thin |
