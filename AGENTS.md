@@ -43,6 +43,7 @@ without it, the `orb` command line tool does the same things.
 **Knowledge documents.** These are files edited like source: `docs/*.md`.
 - `docs/initial_investigation.md` is the engine survey; its [C] items are confirmed and its [G] items are guessed.
 - `docs/RBS42.txt` is the file format.
+- `docs/beats.md` is how to write a song from a JSON spec and hear it.
 - Later tasks add `test_machine.md`, `song_load.md`, `export_state.md` and `rbm.md`.
 - `docs/original_bugs.md` lists the defects of the original (what, addresses, trigger, effect, corpus songs, orb's model, [C]/[G]). A newly found defect of the original goes into `docs/original_bugs.md` as well as its home document.
 - A new fact about the original goes into the document it belongs to, with addresses, in the same commit as the work.
