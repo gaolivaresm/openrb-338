@@ -280,19 +280,97 @@ python3 tools/rbs.py json SONG.rbs     # the model, the same shape `build` takes
 
 Copying a `diag` song and changing one field is the fastest way to learn what each knob does.
 
+## Tricks from the people who used it
+
+Two decades of community knowledge, and none of it is in the code. The sources: Peff's Keyboard
+Magazine article of July 2000 ("ReBirth of the Cool", Kurt Kurasaki, six pages, with example songs
+in `examples/`) and the 320 mods of the Computer Controlled Underground archive
+(`github.com/peffre/ReBirth-RB-338`). Neither is in git; both are read locally.
+
+### 32-step patterns out of 16-step ones
+
+The 909 and the 808 cannot hold a 32-step pattern. Use two bars of a song loop:
+
+1. Loop locators over two bars, bar set to the loop start.
+2. Record, select pattern A1, advance one bar, select A2, stop.
+3. Program the loop as if it were pattern mode.
+
+Knob settings reset each cycle, so they must be recorded into the loop. For 32nd-note rolls, double
+the tempo and double the delay steps with it: at 133 BPM, 266 BPM and 6 delay steps give each step
+the length of a 32nd note. The article notes the app's ceiling of 500 BPM, which caps a 32-step
+pattern at 250; the file format itself stores the tempo as an integer of thousandths, so the limit
+is the program's, not the format's.
+
+### Three beats to the bar
+
+Song mode does not really handle patterns shorter than 16 steps: a 12-step pattern plays and
+cycles, but a pattern change replays its first four steps first. Two ways round it: change the
+12-step pattern every three bars, or use three patterns (48 steps) for four bars of 3/4. Using 12
+steps for a whole bar also means the real tempo is 75% of the displayed one; 160 shown is 120
+played.
+
+### Toms in tune
+
+The tunable 808 and 909 toms take musical samples in many mods, so they can play melodies. The
+808's tuning knob has 36 frames and the 909's 41, and the article gives the cents of each. On the
+808: frame 18 is the sample's own pitch, frame 22 is +100 cents, frame 14 is -100 cents, so every
+four or five frames is a semitone. On the 909 those land on frames 20, 24 and 17, and its first and
+last positions are not chromatic.
+
+### The delay is an instrument, not just an effect
+
+This is the trick that turns one 303 into a chord:
+
+- **Plucked 303**: the COMP with its ratio at maximum and its threshold near nine o'clock gives the
+  attack its pop.
+- **Polyphonic 303**: a short eight-step arpeggio with slide, mix delay at maximum, delay steps 2,
+  feedback near two o'clock. The delay sustains the notes over each other and they become a chord,
+  leaving the second 303 free for a bass line.
+- **Reverb**: delay steps at the shortest (a sixteenth triplet), pan centred, feedback at 90%. A
+  mono reverb whose length is the feedback.
+- **Loop sampler**: feedback at maximum loops for ever, and delay steps at 16 holds one bar of
+  everything. Feedback to zero stops it.
+
+The article's example songs use exactly these: `chords01.rbs` has delay steps 2 and feedback 77,
+which is the polyphonic 303 setting.
+
+### Wah and filter sweeps
+
+Set the PCF to band pass, amount 30%, decay 75%, Q 80%, then record PCF frequency changes in song
+mode. Opening and closing it over a 303 line is the wah effect.
+
+### Check that a knob moved
+
+A change that reaches the engine changes the audio. Render twice and compare with `md5sum`: equal
+files mean the knob never reached the engine. That test is what exposed the track-versus-chunk trap
+above, and it is the fastest way to tell a real parameter from a decorative one.
+
+
 ## Where this comes from
 
-Two sources, and they know different things:
+Three sources, and each knows something the others do not:
 
-- **The code and the songs** (`tools/rbs.py`, `crates/`, `tests/songs/`) say what a value
-  computes and what a field is called.
+- **The code and the songs** (`tools/rbs.py`, `crates/`, `tests/songs/`) say what a value computes
+  and what a field is called.
 - **The original manual**, `docs/propellerhead_rebirth_rb338_v2.01_manual.pdf` (232 pages, Ernst
-  Nathorst-Böös, Propellerhead 1998), says what a knob is *for*. The code cannot tell you that a
+  Nathorst-Böös, Propellerhead 1998), says what a knob is for. The code cannot tell you that a
   closed hi-hat cuts off an open one, or that slide goes on the step you slide from.
+- **The people who used it**, the Keyboard Magazine article of July 2000 and the 320 mods of the
+  Computer Controlled Underground archive, say how it was actually played: 32-step patterns out of
+  two bars, a delay that makes chords, toms tuned to play melodies. That knowledge exists nowhere
+  in the program.
 
-The manual is copyrighted and stays out of git (`.gitignore`), read locally only. What is written
-here is in our own words, with the page it comes from, so a reader can check it.
+All three are copyrighted and stay out of git. What is written here is in our own words, with the
+page or the file it comes from, so a reader can check it.
 
-Where the two disagree, the manual wins on intent and the code wins on behaviour: this project
-matches what the original *did*, which the manual describes and the disassembly proves.
+Where they disagree, the manual and the article win on intent and the code wins on behaviour: this
+project matches what the original *did*, which the manual describes, the community explored, and
+the disassembly proves.
+
+To hear the article's example songs and the archive's mods, keep them outside the repository:
+
+```sh
+./target/release/orb render "chords01.rbs" -o /tmp/chords.wav      # the polyphonic 303
+python3 tools/rbs.py dump "Plucked 303-01.rbs" | head -20          # its knobs, to learn from
+```
 
