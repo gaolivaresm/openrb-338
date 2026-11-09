@@ -31,6 +31,10 @@ You work in your own git worktree on your own branch, and everything is relative
 - The shell is fish: put multi-step sequences in a bash script file in that subdirectory.
 - Use `/usr/bin/python3` for the Python tools.
 - Builds and tests run at their tools' default parallelism: no `-j`.
+- The `orb` MCP server (`crates/orb-mcp`, docs/mcp.md) does the song facts, the render, the
+  comparison and the mod lookup as MCP tools when it is loaded. It is the same library as the
+  `orb` command line tool: `orb_compare` is the corpus check an engine change needs, and
+  `orb_info` is `orb info --json`. Without the server, the `orb` command does the same.
 
 ## Layout
 

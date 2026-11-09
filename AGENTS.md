@@ -14,6 +14,13 @@ Planning, progress and decisions live in `backlog/` (Backlog.md). The shared age
 - its MCP tools (the `backlog` MCP server) when they are loaded in the session;
 - otherwise the `backlog` CLI, which truncates long documents in `doc view` and breaks on shell quoting.
 
+**The `orb` MCP server.** `crates/orb-mcp` serves the songs, the render, the comparison and the mod
+lookup as MCP tools (`orb_info`, `orb_render`, `orb_compare`, `orb_mod_list`), and `.mcp.json`
+registers it as `orb` (docs/mcp.md). When it is loaded in the session, prefer it over shelling out
+to `orb`: `orb_compare` is how an engine change is checked against the reference corpus, and its
+answer is the `orb` answer. The server must be on the `PATH` (`cargo build --release -p orb-mcp`);
+without it, the `orb` command line tool does the same things.
+
 **Useful commands.**
 
 | Command | Shows |
