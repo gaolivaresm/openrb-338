@@ -339,6 +339,22 @@ which is the polyphonic 303 setting.
 Set the PCF to band pass, amount 30%, decay 75%, Q 80%, then record PCF frequency changes in song
 mode. Opening and closing it over a 303 line is the wah effect.
 
+### The mixer's level is not a fade
+
+Setting a channel's level to 0 and raising it later does not fade the channel in. The engine reads
+the level when the song starts, and an event at position 0 with value 0 leaves the channel silent
+for the whole render, whatever comes after it. Two events at the same position are worse: which one
+wins is not defined.
+
+The way to make an instrument enter is to leave its level alone and shape its **sound** instead:
+
+- start with the 303's `cutoff` nearly shut (6 to 10) and open it where the part should arrive;
+- or change the level once, at the top, and let the pattern change do the work of marking a new
+  section.
+
+This was found the hard way: a piece with `level 0` at bar 0 and `level 127` at bar 5 rendered
+almost silent from bar 0 to 15, while the same piece with no mixer events at all played fine.
+
 ### Check that a knob moved
 
 A change that reaches the engine changes the audio. Render twice and compare with `md5sum`: equal
