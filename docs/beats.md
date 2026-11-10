@@ -431,6 +431,39 @@ The bars of one pattern differed more than the bars of two different patterns â€
 carried across the bar line and moved the waveform more than the pattern change did. Organic, but
 for a different reason than intended: it is the echo that varies, not the playing.
 
+### Slap bass, from a mirror in the corpus
+
+A bright, short bass with a hard attack does not come from turning the bass up. The settings that
+do it are in one of the shipped songs ("G-Spot", by Dreadzone, programmed by Tim Bran):
+
+| Knob | Value | Why |
+|---|---|---|
+| `cutoff` | 84 to 88 | the filter open, so the attack has brightness to cut through |
+| `resonance` | 84 to 90 | the peak at the cutoff adds the "pop" |
+| `accent` | 118 to 127 | the whole point: the accented step hits much harder than the rest |
+| `decay` | 62 to 100 | short, so the note stops instead of swelling |
+| `dist.amount` / `dist.shape` | 58 to 70 / 60 to 127 | the grit that makes it read as slap |
+
+The manual's compressor recipe helps too: ratio at maximum, threshold low (the article calls this
+the "plucked" attack). What it does *not* need is level. In the piece this was tried on, the bass
+at level 104 with those settings took the low-frequency energy of the last section from 318 to 983
+without the master clipping.
+
+### Carry it, do not fade it
+
+The bass in that music does not leave when the drums do: it takes over and keeps going. Since a
+level change is not heard here, "keeps going" has to be **more notes**, not more volume:
+
+```
+bars 0-39    a single note a bar, or two
+bars 40-47   four notes, accents on the one
+bars 48-55   eight notes
+bars 56-63   twelve notes, the figure filling the bar, to the last beat
+```
+
+The same pattern change that makes an arrangement audible also makes an ending arrive: the piece
+gets denser instead of quieter, and nothing has to fade.
+
 ### The level that works, and the one that does not
 
 Eleven pieces, each measured, each judged by ear. The two sets do not overlap:
