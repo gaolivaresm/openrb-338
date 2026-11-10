@@ -431,6 +431,27 @@ The bars of one pattern differed more than the bars of two different patterns â€
 carried across the bar line and moved the waveform more than the pattern change did. Organic, but
 for a different reason than intended: it is the echo that varies, not the playing.
 
+### The mode is in the corpus, not in a theory book
+
+The 303's `note` is a scale position, so "minor" means choosing positions, not picking a key. The
+songs in `tests/songs/shipped` answer it directly. Counting every sounding note of the bass across
+three of them:
+
+```
+G-Spot       0 (26%)  7 (20%)  4 (11%)  9 (8%)   3 (8%)
+Calm         0 (28%)  7 (18%)  4 (10%)  3 (9%)  10 (7%)
+Transfusion  0 (26%)  5 (17%)  7 (11%)  4 (10%)   9 (8%)
+```
+
+Four positions carry most of the music in all three: **0, 7, 4 and 3**. Read as intervals from the
+root, that is the root, the fifth, the third and the minor third. Root and fifth alone are
+ambiguous; adding the third makes it a chord, and having both `4` and `3` keeps the mode open â€” the
+music is dark without being mournful, which is exactly the balance a dance track wants.
+
+A piece written on those four positions, mostly 0 and 7 with 4 and 3 as colour, sits in the same
+harmonic world as the shipped songs. A piece written on 1, 3, 5, 6 does not, whatever its rhythm
+does.
+
 ### Slap bass, from a mirror in the corpus
 
 A bright, short bass with a hard attack does not come from turning the bass up. The settings that
