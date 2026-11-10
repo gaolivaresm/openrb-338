@@ -431,6 +431,35 @@ The bars of one pattern differed more than the bars of two different patterns �
 carried across the bar line and moved the waveform more than the pattern change did. Organic, but
 for a different reason than intended: it is the echo that varies, not the playing.
 
+### The level that works, and the one that does not
+
+Eleven pieces, each measured, each judged by ear. The two sets do not overlap:
+
+| RMS | Pieces | Verdict |
+|---|---|---|
+| 2450 to 3620 | sin palabras, envolvente | the bass smothers everything; "a wall" |
+| **1390 to 1600** | al reves, espacio, micro | "works", "leave space", "attractive" |
+| **785 to 975** | empuje, perfil | "a good base for a DJ" |
+
+Above about 2400 the mix collapses: every element is loud enough that none can be heard
+separately. Between 800 and 1600, the parts stay legible. That is a far narrower window than the
+headroom suggests, and the reason is the same one three failed pieces share: a loud, continuous
+element sets the ceiling for everything else.
+
+The rule to write down: **master at 112 and keep the parts under 130, not 127 with a master at
+100.** Leave the volume for the end, and mix for separation instead.
+
+### When the beat leaves, something has to be there
+
+A drop-out only works if what remains can carry the piece. Measured on one arrangement: with the
+beat gone at bar 52 and a micro layer at level 40, the low-frequency energy fell from 584 to 159 —
+a third of the level — and the section read as a hole rather than a rest. Raising the layer to 82
+brought it to 259, which is a drop to about three quarters and reads as a change of weight instead
+of a failure.
+
+The instrument that stays is the one that decides whether a drop-out works. It has to be quiet
+enough not to bury the beat, and present enough to hold the room when the beat goes.
+
 ### Fifteen seconds of pulse is an apology
 
 The previous pieces opened with a long stretch where only a pulse played, on the theory that
