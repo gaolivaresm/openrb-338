@@ -400,6 +400,25 @@ tracks high-frequency content: the same four settings give a spread of more than
 That number is also the trap: a loud hi-hat raises it as much as an open filter does. Compare two
 renders that differ **only** in the filter, or the measurement says nothing.
 
+### Space, not volume
+
+A quiet, dark bass with the rest of the mix below it does not sound "atmospheric": it sounds like
+a wall with nothing behind it. The ear separates sounds by level *and* by rhythm, and a bass that
+plays continuously removes the second cue for everything else. Measured on one attempt: the bass at
+level 118 against the drums at 58 left no room, and the piece read as one loud object.
+
+Two rules that came out of it:
+
+- **Fewer notes, wider gaps.** The shipped song "Calm" puts 9 notes of 16 in its 303 pattern; the
+  dense ones use all 16. An ambient piece wants the low end of that, and silence between hits.
+- **Do not outline a chord in order.** A figure that walks root, root, third, root, fifth is the
+  shape of several well-known tunes, and a listener will hear the quote whether it was meant or
+  not. Wide jumps that do not resolve, or a single repeated pitch, avoid it.
+
+The piece that worked best so far does the opposite of the obvious in three ways: the toms carry
+the melody (tuned apart, one hit at a time), the 303 plays single notes far apart, and the delay is
+the only thing filling the gaps. Its ratio of real silence is about one sample in eight.
+
 ### Check that a knob moved
 
 A change that reaches the engine changes the audio. Render twice and compare with `md5sum`: equal
