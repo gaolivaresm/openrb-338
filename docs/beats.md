@@ -431,6 +431,34 @@ The bars of one pattern differed more than the bars of two different patterns â€
 carried across the bar line and moved the waveform more than the pattern change did. Organic, but
 for a different reason than intended: it is the echo that varies, not the playing.
 
+### Fifteen seconds of pulse is an apology
+
+The previous pieces opened with a long stretch where only a pulse played, on the theory that
+something has to establish the grid before anything else can be heard. It is not true: the shipped
+songs all start **at bar 0 with the beat already running**, and use the chunk's `enabled` to leave
+one machine out rather than starting from silence. A listener gives a track a few seconds, not
+fifteen, and a pulse with nothing over it spends them on nothing.
+
+What works instead: the first four bars already carry the beat, and the interest comes from parts
+entering and leaving **above** it. Four-bar blocks, so no shape lasts more than eight seconds.
+
+### Dynamics that are heard, and dynamics that are not
+
+A level change in a track does not move the render (see "the mixer's level is not a fade" above), so
+an arrangement cannot be built out of fades. The variation that *is* heard comes from the patterns:
+a one-hit bar against an eight-hit bar is a real drop, because the instruments stop playing rather
+than turning down.
+
+But a constant layer buries all of it. Measured on one attempt: the micro layer at level 72 against
+the beat at 96 produced the same RMS (668) in every four-bar block, including the block where the
+beat played a single kick; with the layer at 40 the blocks still read flat, and the only step in the
+whole curve was where the 303 changed pattern. **The instrument that never rests decides the level
+of the piece**, whatever the others do.
+
+So: if a layer is meant to hold the texture, it has to be quiet enough that the parts above it can
+be heard stopping. Otherwise its constancy becomes the piece's shape, and the arrangement inside it
+disappears.
+
 ### Space, not volume
 
 A quiet, dark bass with the rest of the mix below it does not sound "atmospheric": it sounds like
