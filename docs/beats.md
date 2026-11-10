@@ -400,6 +400,37 @@ tracks high-frequency content: the same four settings give a spread of more than
 That number is also the trap: a loud hi-hat raises it as much as an open filter does. Compare two
 renders that differ **only** in the filter, or the measurement says nothing.
 
+### Micro-rhythm: variation too small to hear as a change
+
+A loop stops sounding mechanical when it varies by amounts below the level of a new idea. The
+engine gives two handles for that:
+
+- **Shuffle is a micro-delay, not a swing.** `shuffled()` (0x1001F3D0) moves only the second 16th
+  of each 8th, by `shuffle / 6` ticks, up to 21 of them at value 127. At 104 BPM a tick is under
+  two milliseconds, so shuffle 96 is a displacement of about 16 ticks, not a triplet feel. Small
+  values do almost nothing; the useful range is high.
+- **Variation by one step.** Write one figure, then each pattern that follows is a copy with a
+  single hit moved by one step (a tom from 9 to 10, a rim from 13 to 14). The figure stays
+  recognisable and its position never settles. Rotating four or five of those variants on one clock
+  while another instrument rotates on a different clock means the two never line up twice.
+
+What this does not give: the *amount* is global (GLOB[14], one value for the song), so the
+micro-delay cannot drift bar by bar. What each pattern does carry is your own `shuffle` switch
+(`song.rs`: 0 means the step function uses the unshuffled tick), so one drum machine can swing while
+another plays straight — which is the other half of a microrhythm, since two grids that disagree by
+a few ticks sound alive where one grid sounds programmed.
+
+Measured on a piece built this way, comparing bars by the mean difference of their samples:
+
+```
+same pattern, adjacent bars   1409
+different patterns, 8 bars apart   387
+```
+
+The bars of one pattern differed more than the bars of two different patterns — the delay's tail
+carried across the bar line and moved the waveform more than the pattern change did. Organic, but
+for a different reason than intended: it is the echo that varies, not the playing.
+
 ### Space, not volume
 
 A quiet, dark bass with the rest of the mix below it does not sound "atmospheric": it sounds like
