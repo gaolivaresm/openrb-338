@@ -317,6 +317,35 @@ The tunable 808 and 909 toms take musical samples in many mods, so they can play
 four or five frames is a semitone. On the 909 those land on frames 20, 24 and 17, and its first and
 last positions are not chromatic.
 
+That makes the kit an instrument. Three toms set 18 frames apart (0, 18, 40 — the low one clamped
+at the knob's floor) are an octave and a fifth, and a pattern written in the tom columns is then a
+phrase:
+
+```json
+"steps": {
+  "0":  [0,1,0,0,0,0,0,0,0,0,0,0],
+  "3":  [0,0,0,0,1,0,0,0,0,0,0,0],
+  "6":  [0,1,0,0,0,0,0,0,0,0,0,0],
+  "8":  [0,0,0,0,0,1,0,0,0,0,0,0]
+}
+```
+
+Read the tom columns down the steps and it is a tune: low, mid, low, high. The kick
+(`column 1`) and the snare (`column 2`) keep time underneath it. The drums carry the melody and
+whatever else is playing carries the pulse — the inverse of the obvious arrangement.
+
+The knob takes 0 to 63, so a frame that would fall below 0 is clamped: transposing a tom down by
+five semitones from frame 18 lands on frame 0, and going further does nothing.
+
+### A held note with a rhythm
+
+The 303 plays one note and holds it; the PCF gives it the rhythm. In `mode 1` (low pass) with a
+high `resonance`, a large `amount` and a short `decay`, sweeping the PCF's `frequency` chops the
+sustained pitch into a pattern. The instrument keeps time without playing more than one note a bar.
+
+That is the other half of the inversion: the drums have the tune and the synth has the rhythm,
+where most pieces do the opposite.
+
 ### The delay is an instrument, not just an effect
 
 This is the trick that turns one 303 into a chord:
